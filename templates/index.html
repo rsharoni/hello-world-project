@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hello World</title>
+    <style>
+        /* Full‑screen animated gradient background */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00eaff, #ff8800);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Shared animation for both texts */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Hello World text */
+        .hello {
+            font-size: 5rem;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeSlideUp 2s ease forwards;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Text from text.txt */
+        .file-text {
+            margin-top: 20px;
+            font-size: 2rem;
+            color: #ffeeff;
+            /* soft glowing pinkish-white */
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeSlideUp 2s ease forwards;
+            animation-delay: 1s;
+            /* starts 1 second later */
+            text-shadow: 0 0 15px rgba(255, 200, 255, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hello">Hello World</div>
+
+    <!-- This will show the text from text.txt -->
+    <div class="file-text">{{ file_text }}</div>
+</body>
+
+</html>
