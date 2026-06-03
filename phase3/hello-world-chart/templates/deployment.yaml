@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas:  {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: hello-world
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" # rsharoni/hello-world:1.0.0
+          ports:
+            - containerPort: 5000
+
+          # Readiness Probe — can this pod receive traffic?
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          # Liveness Probe — should Kubernetes restart this pod?
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 200m
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data   # <-- inside the container
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc
+
