@@ -72,7 +72,8 @@ pipeline {
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig-cred']) {
                    sh '''
-                    kubectl apply -f ./phase3/pv.yaml
+                    kubectl get namespace dev || kubectl create namespace dev
+                    kubectl apply -n dev -f ./phase3/pv.yaml
                     helm upgrade --install hello-world ./phase3/hello-world-chart --namespace dev --create-namespace
                     '''
                 }
