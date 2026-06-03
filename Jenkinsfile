@@ -73,7 +73,7 @@ pipeline {
                 withKubeConfig([credentialsId: 'kubeconfig-cred']) {
                    sh '''
                     kubectl apply -f ./phase3/pv.yaml
-                    helm upgrade --install hello-world ./phase3
+                    helm upgrade --install hello-world ./phase3/hello-world-chart
                     '''
                 }
             }
