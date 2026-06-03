@@ -59,6 +59,15 @@ pipeline {
             }
         }
 
+        stage('Debug Tools') {
+            steps {
+                sh 'which kubectl || echo "kubectl NOT FOUND"'
+                sh 'which helm || echo "helm NOT FOUND"'
+                sh 'kubectl version --client || echo "kubectl BROKEN"'
+                sh 'helm version || echo "helm BROKEN"'
+            }
+        }
+
         stage('Deploy with Helm') {
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig-cred']) {
