@@ -1,0 +1,22 @@
+# Exclude the local data, this should be congured via volume
+data/
+
+# Exclude the local virtual environment
+venv/
+env/
+
+# Exclude Git history (reduces image size)
+.git/
+.gitignore
+
+# Exclude Python bytecode
+__pycache__/
+*.pyc
+
+# Exclude local settings/secrets
+.env
+
+# Exclude Docker files themselves
+Dockerfile
+.dockerignore
+
